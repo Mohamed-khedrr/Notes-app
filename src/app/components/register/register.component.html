@@ -1,0 +1,124 @@
+<div
+  id="particles-js"
+  class="bg-dark position-relative d-flex justify-content-center align-items-center"
+>
+  <form
+    action=""
+    [formGroup]="registerForm"
+    class="position-absolute w-50 text-white"
+    (ngSubmit)="signUp(registerForm)"
+  >
+    <div>
+      <label for="first_name" class="mb-1">First Name</label>
+      <input
+        id="first_name"
+        type="text"
+        formControlName="first_name"
+        class="form-control"
+      />
+      <div
+        class="alert alert-danger p-2"
+        *ngIf="
+          registerForm.get('first_name')?.errors &&
+          registerForm.get('first_name')?.touched
+        "
+        role="alert"
+      >
+        Requierd !
+      </div>
+    </div>
+    <div>
+      <label for="last_name" class="mb-1 mt-3">Last Name</label>
+
+      <input
+        id="last_name"
+        formControlName="last_name"
+        type="text"
+        class="form-control"
+      />
+      <div
+        class="alert alert-danger p-2"
+        *ngIf="
+          registerForm.get('last_name')?.errors &&
+          registerForm.get('last_name')?.touched
+        "
+        role="alert"
+      >
+        Requierd !
+      </div>
+    </div>
+    <label for="age" class="mb-1 mt-3">Age</label>
+    <input
+      id="age"
+      type="text"
+      formControlName="age"
+      class="w-100 form-control"
+    />
+    <div
+      class="alert alert-danger p-2"
+      *ngIf="
+      registerForm.get('age')?.errors?.['required'] && registerForm.get('age')?.touched
+    "
+      role="alert"
+    >
+      Requierd !
+    </div>
+
+    <label for="email" class="mb-1 mt-3">Email</label>
+    <input
+      id="email"
+      type="text"
+      formControlName="email"
+      class="w-100 form-control"
+    />
+    <div
+      class="alert alert-danger p-2"
+      *ngIf="
+        registerForm.get('email')?.errors?.['required'] && registerForm.get('email')?.touched
+      "
+      role="alert"
+    >
+      Requierd !
+    </div>
+
+    <div
+      class="alert alert-danger p-2"
+      *ngIf="
+      registerForm.get('email')?.errors?.['email'] && registerForm.get('email')?.touched
+    "
+      role="alert"
+    >
+      Not A Valid Email
+    </div>
+
+    <label for="password" class="mb-1 mt-3"> Password</label>
+    <input
+      id="password"
+      type="text"
+      formControlName="password"
+      class="w-100 form-control"
+    />
+    <div
+      class="alert alert-danger p-2"
+      *ngIf="
+      registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched
+    "
+      role="alert"
+    >
+      Requierd !
+    </div>
+    <button
+      class="btn btn-success w-100 my-4"
+      [disabled]="registerForm.status == 'INVALID'"
+    >
+      Sign Up
+    </button>
+    <div
+      id="email-exists"
+      class="alert alert-danger p-2 text-center d-none"
+      role="alert"
+    >
+      Email Already Exists
+    </div>
+  </form>
+</div>
