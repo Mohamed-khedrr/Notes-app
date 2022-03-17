@@ -15,8 +15,10 @@ export class NotesComponent implements OnInit {
     private _NotesService: NotesService
   ) {}
 
+  token: string = <string>localStorage.getItem('userToken');
+
   ngOnInit(): void {
-    this._NotesService.getAllNotes().subscribe((res) => {
+    this._NotesService.getAllNotes(this.token).subscribe((res) => {
       if (res.message == 'success') {
         this.getUserNotes();
       } else {
@@ -24,6 +26,8 @@ export class NotesComponent implements OnInit {
       }
     });
   }
+  userNotes: any = [];
+
   noteForm: FormGroup = new FormGroup({
     title: new FormControl(null, [Validators.required]),
     desc: new FormControl(null),
@@ -31,7 +35,12 @@ export class NotesComponent implements OnInit {
     token: new FormControl(localStorage.getItem('userToken')),
   });
 
-  userNotes: any = [];
+  editForm: FormGroup = new FormGroup({
+    title: new FormControl(null),
+    desc: new FormControl(null),
+    NoteID: new FormControl(null),
+    token: new FormControl(null),
+  });
 
   addNote(note: FormGroup) {
     // console.log(note.value);
@@ -50,10 +59,47 @@ export class NotesComponent implements OnInit {
   }
 
   getUserNotes() {
-    this._NotesService.getAllNotes().subscribe(
+    this._NotesService.getAllNotes(this.token).subscribe(
       (res) => {
         if (res.message == 'success') {
           this.userNotes = res.Notes;
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  deleteNote(noteId: string) {
+    this._NotesService.deleteNote(noteId, this.token).subscribe(
+      (res) => {
+        if (res.message == 'deleted') {
+          this.getUserNotes();
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  editNote(title: string, desc: string, noteId: string) {
+    this.editForm.reset({
+      title: title,
+      desc: desc,
+      NoteID: noteId,
+      token: localStorage.getItem('userToken'),
+    });
+    $('#title-update').val(title);
+    $('#desc-update').val(title);
+  }
+
+  updateNote(data: FormGroup) {
+    this._NotesService.updateNote(data.value).subscribe(
+      (res) => {
+        if (res.message == 'updated') {
+          this.getUserNotes();
         }
       },
       (err) => {

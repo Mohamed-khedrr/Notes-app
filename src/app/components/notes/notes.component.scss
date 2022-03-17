@@ -4,8 +4,17 @@
 .note {
   min-height: 250px;
   word-break: break-all;
+  box-shadow: 9px 9px 18px 1px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 9px 9px 18px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 9px 9px 18px 1px rgba(0, 0, 0, 0.75);
 }
 .drop-down-button {
   background-color: inherit;
   border: none;
+}
+.dropdown-menu {
+  min-width: auto !important;
+}
+.dropdown-item {
+  cursor: pointer;
 }
