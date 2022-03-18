@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import * as $ from 'jquery';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 declare var particlesJS: any;
 @Component({
   selector: 'app-register',
@@ -20,7 +21,6 @@ export class RegisterComponent implements OnInit {
         console.log('callback - particles.js config loaded');
       }
     );
-
     if (
       localStorage.getItem('userToken') != null &&
       localStorage.getItem('userToken') != ''
@@ -39,16 +39,31 @@ export class RegisterComponent implements OnInit {
   });
 
   signUp(userData: FormGroup) {
+    $('#sign-up-btn').addClass('d-none');
     this._AuthService.registerNewUser(userData.value).subscribe(
       (res) => {
         if (res.message == 'success') {
-          this._Router.navigate(['/login']);
+          $('#register-form').trigger('reset');
+          // clear form inputs
+          // let inputs = document.querySelectorAll("input");
+          // inputs.forEach((input) => (input.value = ""));
+
+          $('#register-success').removeClass('d-none');
+          $('#sign-up-error').addClass('d-none');
+          $('#email-exists').addClass('d-none');
         } else {
           $('#email-exists').removeClass('d-none');
+          $('#sign-up-btn').removeClass('d-none');
+          $('#sign-up-error').addClass('d-none');
+          $('#register-success').addClass('d-none');
         }
       },
       (err) => {
         console.log(err);
+        $('#sign-up-btn').removeClass('d-none');
+        $('#sign-up-error').removeClass('d-none');
+        $('#register-success').addClass('d-none');
+        $('#email-exists').addClass('d-none');
       }
     );
   }
