@@ -3,7 +3,7 @@
 }
 .note {
   min-height: 250px;
-  word-break: break-all;
+  word-break: normal;
   box-shadow: 9px 9px 18px 1px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 9px 9px 18px 1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 9px 9px 18px 1px rgba(0, 0, 0, 0.75);
@@ -17,4 +17,12 @@
 }
 .dropdown-item {
   cursor: pointer;
+}
+
+.note h3 {
+  font-weight: 700;
+}
+.note p {
+  font-size: 1.2rem;
+  font-weight: 500;
 }

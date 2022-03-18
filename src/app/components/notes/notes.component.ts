@@ -92,7 +92,7 @@ export class NotesComponent implements OnInit {
       token: localStorage.getItem('userToken'),
     });
     $('#title-update').val(title);
-    $('#desc-update').val(title);
+    $('#desc-update').val(desc);
   }
 
   updateNote(data: FormGroup) {
